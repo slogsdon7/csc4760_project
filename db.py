@@ -1,4 +1,6 @@
 import sqlite3
+from containers import YoutubeVideo
+from itertools import repeat
 
 COUNTRY_TABLE_SQL = """
 create table if not exists country
@@ -53,4 +55,10 @@ class DB:
     def create_tables(self) -> None:
         self.conn.executescript(COUNTRY_TABLE_SQL)
         self.conn.executescript(VIDEO_TABLE_SQL)
+
+    def insert_video(self, video: YoutubeVideo):
+        n = len(video._fields)
+        SQL = f"INSERT INTO video ({', '.join(video._fields)}) VALUES ({', '.join(repeat('?', n))})"
+        with self.conn:
+            self.conn.execute(SQL, video)
 
