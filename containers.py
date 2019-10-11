@@ -1,9 +1,9 @@
-from typing import NamedTuple
+from typing import NamedTuple, Union
 
 
 class YoutubeVideo(NamedTuple):
+    id: Union[int, None]  # Generated DB ID
     video_id: str
-    id: int  # Generated DB ID
     trending_date: str
     title: str
     channel_title: str
@@ -13,11 +13,11 @@ class YoutubeVideo(NamedTuple):
     views: int
     likes: int
     dislikes: int
+    comment_count: int
     thumbnail_link: str
     comments_disabled: bool
     ratings_disabled: bool
     video_error_or_removed: bool
     description: str
-    country_id: str
-    comment_count: int
+    country: str
     csv_row: int  # Generated attribute based on the row number in the original CSV file

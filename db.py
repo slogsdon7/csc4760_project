@@ -18,9 +18,9 @@ create unique index if not exists country_code_uindex
 VIDEO_TABLE_SQL = """
 create table if not exists video
 (
-    video_id               text,
     id                     INTEGER
         primary key,
+    video_id               text,
     trending_date          date,
     title                  text,
     channel_title          text,
@@ -30,24 +30,34 @@ create table if not exists video
     views                  int,
     likes                  int,
     dislikes               int,
-    comments               int,
+    comment_count          int,
     thumbnail_link         text,
     comments_disabled      boolean,
     ratings_disabled       boolean,
     video_error_or_removed boolean,
     description            text,
-    country_id             int
-        references country,
-    comment_count          int,
+    country                text,
     csv_row                int
 );
 
 create unique index if not exists video_country_id__csv_row_uindex
-    on video (country_id, csv_row);
+    on video (country, csv_row);
+"""
+
+CATEGORY_TABLE_SQL = """
+create table if not exists category
+(
+    id int
+        constraint category_pk
+            primary key,
+    name text
+);
+
 """
 
 
 class DB:
+
     def __init__(self, path: str = 'db.sqlite') -> None:
         self.conn = sqlite3.connect(path)
         self.create_tables()
@@ -55,10 +65,10 @@ class DB:
     def create_tables(self) -> None:
         self.conn.executescript(COUNTRY_TABLE_SQL)
         self.conn.executescript(VIDEO_TABLE_SQL)
+        self.conn.executescript(CATEGORY_TABLE_SQL)
 
-    def insert_video(self, video: YoutubeVideo):
+    def insert_video(self, video: YoutubeVideo) -> None:
         n = len(video._fields)
-        SQL = f"INSERT INTO video ({', '.join(video._fields)}) VALUES ({', '.join(repeat('?', n))})"
+        SQL = f"INSERT OR IGNORE INTO video ({', '.join(video._fields)}) VALUES ({', '.join(repeat('?', n))})"
         with self.conn:
             self.conn.execute(SQL, video)
-
