@@ -15,9 +15,9 @@ class YoutubeVideo(NamedTuple):
     dislikes: int
     comment_count: int
     thumbnail_link: str
-    comments_disabled: bool
-    ratings_disabled: bool
-    video_error_or_removed: bool
+    comments_disabled: Union[bool, str]
+    ratings_disabled: Union[bool, str]
+    video_error_or_removed: Union[bool, str]
     description: str
     country: str
     csv_row: int  # Generated attribute based on the row number in the original CSV file

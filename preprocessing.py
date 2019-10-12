@@ -16,16 +16,26 @@ def files():
     for path in glob.glob('data/*.csv'):
         yield path, extract_country_from_fname(path)
 
+def str_to_bool(s):
+    return s.lower() == 'true'
 
 def process_rows(file: str, country: str):
     with open(file, 'r', encoding='utf-8', errors='backslashreplace') as fp:
         reader = csv.reader(fp)
         next(reader)
+        videos = []
         for i, row in enumerate(reader):
             video = YoutubeVideo(None, *row, country, i)
-            video = video._replace(trending_date=datetime.strptime(video.trending_date, '%y.%d.%m').isoformat())
-            print(f'Inserting row {video.csv_row} from {country}')
-            db.insert_video(video)
+            video = video._replace(
+                trending_date=datetime.strptime(video.trending_date, '%y.%d.%m').isoformat(),
+                ratings_disabled=str_to_bool(video.ratings_disabled),
+                comments_disabled=str_to_bool(video.comments_disabled),
+                video_error_or_removed=str_to_bool(video.video_error_or_removed)
+            )
+            videos.append(video)
+        db.bulk_insert_video(videos)
+            #print(f'Inserting row {video.csv_row} from {country}')
+            #db.insert_video(video)
 
 
 def load_categories():
