@@ -11,7 +11,6 @@ db = DB()
 def extract_country_from_fname(filename: str):
     return path.basename(filename)[0:2]
 
-
 def files():
     for path in glob.glob('data/*.csv'):
         yield path, extract_country_from_fname(path)
@@ -34,8 +33,7 @@ def process_rows(file: str, country: str):
             )
             videos.append(video)
         db.bulk_insert_video(videos)
-            #print(f'Inserting row {video.csv_row} from {country}')
-            #db.insert_video(video)
+
 
 
 def load_categories():

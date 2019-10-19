@@ -74,9 +74,14 @@ class DB:
             self.conn.execute(SQL, video)
 
     def bulk_insert_video(self, videos) -> None:
-        n= len(YoutubeVideo._fields)
+        n = len(YoutubeVideo._fields)
         SQL = f"INSERT OR IGNORE INTO video ({', '.join(YoutubeVideo._fields)}) VALUES ({', '.join(repeat('?', n))})"
         with self.conn:
             self.conn.execute("BEGIN;")
             for video in videos:
                 self.conn.execute(SQL, video)
+
+    def fetch_videos(self):
+        with self.conn:
+            for row in self.conn.execute("SELECT * FROM video;"):
+                yield YoutubeVideo(*row)
