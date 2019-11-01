@@ -1,5 +1,6 @@
 import db
 import pandas as pd
+import os
 db = db.DB()
 
 
@@ -34,4 +35,6 @@ def process():
 
 
 if __name__ == '__main__':
+    if not os.path.exists('processed_data'):
+        os.mkdir('processed_data')
     process()
