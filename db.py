@@ -42,6 +42,11 @@ create table if not exists video
 
 create unique index if not exists video_country_id__csv_row_uindex
     on video (country, csv_row);
+    
+create index if not exists video_video_id_index
+    on video (video_id);
+    
+
 """
 
 CATEGORY_TABLE_SQL = """
