@@ -8,15 +8,19 @@ from db import DB
 
 db = DB()
 
+
 def extract_country_from_fname(filename: str):
     return path.basename(filename)[0:2]
+
 
 def files():
     for path in glob.glob('data/*.csv'):
         yield path, extract_country_from_fname(path)
 
+
 def str_to_bool(s):
     return s.lower() == 'true'
+
 
 def process_rows(file: str, country: str):
     with open(file, 'r', encoding='utf-8', errors='backslashreplace') as fp:
@@ -33,7 +37,6 @@ def process_rows(file: str, country: str):
             )
             videos.append(video)
         db.bulk_insert_video(videos)
-
 
 
 def load_categories():
