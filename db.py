@@ -91,7 +91,9 @@ class DB:
             for row in self.conn.execute("SELECT * FROM video;"):
                 yield YoutubeVideo(*row)
 
-    def fetch_videos_as_df(self):
+    def fetch_videos_as_df(self, index=('country', 'video_id')):
         videos = list(self.fetch_videos())
-        df = pd.DataFrame.from_records(data=videos, columns=YoutubeVideo._fields)
+        df = pd.DataFrame.from_records(data=videos, columns=YoutubeVideo._fields, index=index)
+        df.publish_time = pd.to_datetime(df.publish_time)
+        df.trending_date = pd.to_datetime(df.trending_date)
         return df
