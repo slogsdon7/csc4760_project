@@ -4,7 +4,7 @@
 
 ## Setup
 1. Download the dataset from above and extract the files to a directory named `data/`
-2. Run `preprocessing.py` using Python to initialize and populate the sqlite database. This will take a few minutes.
+2. Run `process.py` using Python to initialize and populate the sqlite database. This will take a few minutes.
 
 
 ## Usage
