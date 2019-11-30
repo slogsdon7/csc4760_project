@@ -1,7 +1,7 @@
 import sqlite3
 from containers import YoutubeVideo
 from itertools import repeat
-
+import pandas as pd
 COUNTRY_TABLE_SQL = """
 create table if not exists country
 (
@@ -90,3 +90,8 @@ class DB:
         with self.conn:
             for row in self.conn.execute("SELECT * FROM video;"):
                 yield YoutubeVideo(*row)
+
+    def fetch_videos_as_df(self):
+        videos = list(self.fetch_videos())
+        df = pd.DataFrame.from_records(data=videos, columns=YoutubeVideo._fields)
+        return df
