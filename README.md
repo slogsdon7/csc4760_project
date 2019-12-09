@@ -3,11 +3,44 @@
 [Youtube Dataset](https://www.kaggle.com/datasnaek/youtube-new)
 
 ## Setup
-1. Download the dataset from above and extract the files to a directory named `data/`
-2. Run `process.py` using Python to initialize and populate the sqlite database. This will take a few minutes.
+1. Download the dataset from above and extract the files to the directory named 'data' in the project directory. The directory should look like this when you're done. 
+```
+├── Archive.zip
+├── README.md
+├── analysis.ipynb
+├── containers.py
+├── data
+│   ├── CA_category_id.json
+│   ├── CAvideos.csv
+│   ├── DE_category_id.json
+│   ├── DEvideos.csv
+│   ├── FR_category_id.json
+│   ├── FRvideos.csv
+│   ├── GB_category_id.json
+│   ├── GBvideos.csv
+│   ├── IN_category_id.json
+│   ├── INvideos.csv
+│   ├── JP_category_id.json
+│   ├── JPvideos.csv
+│   ├── KR_category_id.json
+│   ├── KRvideos.csv
+│   ├── MX_category_id.json
+│   ├── MXvideos.csv
+│   ├── RU_category_id.json
+│   ├── RUvideos.csv
+│   ├── US_category_id.json
+│   └── USvideos.csv
+├── db.py
+├── db_loader.py
+├── processed_data
+└── question6.ipynb
+```
+1. Run `pip install -r requirements.txt` in the project directory. You may already have these and wish to skip this step, but it is there just in case.
+2. Run `jupyter notebook` in the project directory to get started
+3. The first cell of analysis.ipynb will run the preprocessing routines if needed, or you can run `python db_loader.py` in the root project directory. 
 
 
-## Usage
+## Dev Info
 
 In `containers.py`, there is a helpful `YoutubeVideo` [namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple) class which maps directly to a row from the video table.
 
