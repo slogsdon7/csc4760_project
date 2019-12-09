@@ -2,6 +2,27 @@ import sqlite3
 from containers import YoutubeVideo
 from itertools import repeat
 import pandas as pd
+
+cols = ['id',
+        'video_id',
+        'trending_date',
+        'title',
+        'channel_title',
+        'category_id',
+        'publish_time',
+        'tags',
+        'views',
+        'likes',
+        'dislikes',
+        'comment_count',
+        'thumbnail_link',
+        'comments_disabled',
+        'ratings_disabled',
+        'video_error_or_removed',
+        'description',
+        'country',
+        'csv_row']
+
 COUNTRY_TABLE_SQL = """
 create table if not exists country
 (
@@ -55,7 +76,8 @@ create table if not exists category
     id int
         constraint category_pk
             primary key,
-    name text
+    name text,
+    assignable boolean
 );
 
 """
@@ -91,9 +113,22 @@ class DB:
             for row in self.conn.execute("SELECT * FROM video;"):
                 yield YoutubeVideo(*row)
 
-    def fetch_videos_as_df(self, index=('country', 'video_id')):
-        videos = list(self.fetch_videos())
-        df = pd.DataFrame.from_records(data=videos, columns=YoutubeVideo._fields, index=index)
+    def fetch_categories(self):
+        with self.conn:
+            rows = self.conn.execute("SELECT * FROM category").fetchall()
+            return pd.DataFrame.from_records(rows, columns=('id', 'category', 'assignable'))
+
+    def fetch_videos_as_df(self, index=('country', 'video_id'), exclude=None):
+        if exclude is None:
+            exclude = ['description', 'tags', 'thumbnail_link', 'id', 'csv_row']
+        _cols = set(cols) - set(exclude)
+        with self.conn:
+            videos = self.conn.execute(f'''SELECT {", ".join(_cols)}
+            FROM video
+            WHERE video_id != '#NAME?' AND video_id != '#VALUE!';
+            ''').fetchall()
+
+        df = pd.DataFrame.from_records(data=videos, columns=_cols, index=index)
         df.publish_time = pd.to_datetime(df.publish_time)
         df.trending_date = pd.to_datetime(df.trending_date)
         return df
