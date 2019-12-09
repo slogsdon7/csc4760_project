@@ -124,8 +124,7 @@ class DB:
         _cols = set(cols) - set(exclude)
         with self.conn:
             videos = self.conn.execute(f'''SELECT {", ".join(_cols)}
-            FROM video
-            WHERE video_id != '#NAME?' AND video_id != '#VALUE!';
+            FROM video;
             ''').fetchall()
 
         df = pd.DataFrame.from_records(data=videos, columns=_cols, index=index)
