@@ -83,8 +83,8 @@ def get_files(path: str) -> tuple:
 def run(path: str, db_path: str):
     db_ = db.DB(db_path)
     csv_files, json_files = get_files(path)
-    load_categories(json_files)
-    return load_data(csv_files)
+    load_categories(json_files, db_)
+    return load_data(csv_files, db_)
 
 if __name__ == '__main__':
     skipped = run('data')
