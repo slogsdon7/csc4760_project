@@ -10,7 +10,6 @@ Cython==0.29.14
 decorator==4.4.1
 defusedxml==0.6.0
 entrypoints==0.3
-fbprophet==0.5
 holidays==0.9.11
 importlib-metadata==0.23
 ipykernel==5.1.3
