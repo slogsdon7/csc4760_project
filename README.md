@@ -1,9 +1,12 @@
 # csc4760_project
 
-[Youtube Dataset](https://www.kaggle.com/datasnaek/youtube-new)
+[Youtube Dataset](https://www.kaggle.com/datasnaek/youtube-new) <-download this
+
+## Dependencies 
+You will need pandas, seaborn, matplotlib, scikit-learn, jupyter, and at least Python 3.6.
 
 ## Setup
-1. Download the dataset from above and extract the files to the directory named 'data' in the project directory. The directory should look like this when you're done. 
+1. Download the dataset from above and extract the files to the directory named 'data' in the project directory. The directory should look roughly like this when you're done. 
 ```
 ├── Archive.zip
 ├── README.md
@@ -32,8 +35,8 @@
 │   └── USvideos.csv
 ├── db.py
 ├── db_loader.py
-├── processed_data
-└── question6.ipynb
+
+
 ```
 1. Run `pip install -r requirements.txt` in the project directory. You may already have these and wish to skip this step, but it is there just in case.
 2. Run `jupyter notebook` in the project directory to get started
