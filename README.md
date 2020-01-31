@@ -1,9 +1,10 @@
 # csc4760_project: Youtube Trending Videos Analysis 
 [Click here to view output of analysis notebook](https://github.com/slogsdon7/csc4760_project/blob/master/analysis.ipynb)
 
-[Youtube Dataset](https://www.kaggle.com/datasnaek/youtube-new) <-download this
 
 ## Dependencies 
+[Youtube Dataset](https://www.kaggle.com/datasnaek/youtube-new)
+
 You will need pandas, seaborn, matplotlib, scikit-learn, jupyter, and at least Python 3.6.
 
 ## Setup
