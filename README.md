@@ -47,6 +47,16 @@ You will need pandas, seaborn, matplotlib, scikit-learn, jupyter, and at least P
 
 ## Dev Info
 
+To get a dataframe with all the videos:
+
+````python
+from db import DB
+
+db = DB()
+df = db.fetch_videos_as_df()
+
+````
+
 In `containers.py`, there is a helpful `YoutubeVideo` [namedtuple](https://docs.python.org/3/library/collections.html#collections.namedtuple) class which maps directly to a row from the video table.
 
 
